@@ -216,7 +216,9 @@ class Homi {
 
 new Homi();
 
-var pillo = new Homi("Emilio", "Vasques", 27, 1.68);
+Homi.prototype.amITall = () => this.height > 1.8;
+
+var pillo = new Homi("Emilio", "Vasques", 27, 1.86);
 
 console.log(Homi);
 console.log(pillo);
@@ -230,7 +232,7 @@ class Developer extends Homi {
   constructor(name, lName, age, height) {
     super(name, lName, age, height);
   }
-  sayHi = () => console.log("WutUp Yo, <br> i am a Developer!");
+  sayHi = () => console.log("WutUp Yo,\ni am a Developer!");
   reply = (name, lName, isDev) => console.log("im a developer");
 }
 
