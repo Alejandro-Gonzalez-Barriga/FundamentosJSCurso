@@ -21,44 +21,57 @@ function onError(id) {
   console.log(`error with ${id}`);
 }
 
-getCharacter(1)
-  .then(character => {
-    console.log(`1 is ${character.name}`);
-    return getCharacter(2);
-  })
-  .then(character => {
-    console.log(`2 is ${character.name}`);
-    return getCharacter(3);
-  })
-  .then(character => {
-    console.log(`3 is ${character.name}`);
-    return getCharacter(4);
-  })
-  .then(character => {
-    console.log(`4 is ${character.name}`);
-    return getCharacter(5);
-  })
-  .then(character => {
-    console.log(`5 is ${character.name}`);
-    return getCharacter(6);
-  })
-  .then(character => {
-    console.log(`6 is ${character.name}`);
-    return getCharacter(7);
-  })
-  .then(character => {
-    console.log(`7 is ${character.name}`);
-  })
-  .catch(onError);
+async function getCharacters() {
+  var ids = [1, 2, 3, 4, 5, 6, 7];
+  var promises = ids.map(id => getCharacter(id));
+  try {
+    var characters = await Promise.all(promises);
+    console.log(characters);
+  } catch (id) {
+    onError(id);
+  }
+}
+
+getCharacters();
+
+// getCharacter(1)
+//   .then(character => {
+//     console.log(`1 is ${character.name}`);
+//     return getCharacter(2);
+//   })
+//   .then(character => {
+//     console.log(`2 is ${character.name}`);
+//     return getCharacter(3);
+//   })
+//   .then(character => {
+//     console.log(`3 is ${character.name}`);
+//     return getCharacter(4);
+//   })
+//   .then(character => {
+//     console.log(`4 is ${character.name}`);
+//     return getCharacter(5);
+//   })
+//   .then(character => {
+//     console.log(`5 is ${character.name}`);
+//     return getCharacter(6);
+//   })
+//   .then(character => {
+//     console.log(`6 is ${character.name}`);
+//     return getCharacter(7);
+//   })
+//   .then(character => {
+//     console.log(`7 is ${character.name}`);
+//   })
+//   .catch(onError);
 
 //callback hell
 
-getCharacter(1, function() {
-  getCharacter(2, function() {
-    getCharacter(3, function() {
-      getCharacter(4, function() {
-        getCharacter(5);
-      });
-    });
-  });
-});
+// getCharacter(1, function() {
+//   getCharacter(2, function() {
+//     getCharacter(3, function() {
+//       getCharacter(4, function() {
+//         getCharacter(5);
+//       });
+//     });
+//   });
+// });
