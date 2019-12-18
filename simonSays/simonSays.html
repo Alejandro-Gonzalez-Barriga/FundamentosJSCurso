@@ -107,10 +107,13 @@
         constructor() {
           this.inicializar();
           this.generateSequence();
-          this.nextLevel();
+          setTimeout(() => {
+            this.nextLevel();
+          }, 500);
         }
 
         inicializar() {
+          this.nextLevel = this.nextLevel.bind(this);
           this.chooseColor = this.chooseColor.bind(this);
           btnEmpezar.classList.add("hide");
           this.level = 1;
@@ -179,21 +182,31 @@
           this.colors.naranja.addEventListener("click", this.chooseColor);
           this.colors.verde.addEventListener("click", this.chooseColor);
         }
+
+        stopOnClickEvents() {
+          this.colors.celeste.removeEventListener("click", this.chooseColor);
+          this.colors.violeta.removeEventListener("click", this.chooseColor);
+          this.colors.naranja.removeEventListener("click", this.chooseColor);
+          this.colors.verde.removeEventListener("click", this.chooseColor);
+        }
+
         chooseColor(ev) {
           const colorName = ev.target.dataset.color;
-          const colorNum = colorToNum(colorName);
+          const colorNum = this.colorToNum(colorName);
           this.lightUpColor(colorName);
           if (colorNum === this.sequence[this.subLevel]) {
             this.subLevel++;
             if (this.subLevel === this.level) {
               this.level++;
-              //this.stopOnClickEvents()
+              this.stopOnClickEvents();
               if (this.level === LAST_LEVEL + 1) {
                 //you won!
-              }else{
-                this.nextLevel()
+              } else {
+                setTimeout(this.nextLevel, 1500);
               }
             }
+          } else {
+            //you lost!
           }
         }
       }
