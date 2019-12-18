@@ -101,6 +101,7 @@
       const naranja = document.getElementById("naranja");
       const verde = document.getElementById("verde");
       const btnEmpezar = document.getElementById("btnEmpezar");
+      const LAST_LEVEL = 10;
 
       class Juego {
         constructor() {
@@ -121,7 +122,7 @@
           };
         }
         generateSequence() {
-          this.sequence = new Array(10)
+          this.sequence = new Array(LAST_LEVEL)
             .fill(0)
             .map(n => Math.floor(Math.random() * 4));
         }
@@ -184,6 +185,15 @@
           this.lightUpColor(colorName);
           if (colorNum === this.sequence[this.subLevel]) {
             this.subLevel++;
+            if (this.subLevel === this.level) {
+              this.level++;
+              //this.stopOnClickEvents()
+              if (this.level === LAST_LEVEL + 1) {
+                //you won!
+              }else{
+                this.nextLevel()
+              }
+            }
           }
         }
       }
