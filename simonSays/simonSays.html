@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Simon Dice</title>
+    <title>Simon Says</title>
     <style>
       body {
         margin: 0;
@@ -105,15 +105,61 @@
       class Juego {
         constructor() {
           this.inicializar();
+          this.generateSequence();
+          this.nextLevel();
         }
 
         inicializar() {
           btnEmpezar.classList.add("hide");
+          this.level = 10;
+          this.colors = {
+            celeste,
+            violeta,
+            naranja,
+            verde
+          };
+        }
+        generateSequence() {
+          this.sequence = new Array(10)
+            .fill(0)
+            .map(n => Math.floor(Math.random() * 4));
+        }
+        nextLevel() {
+          this.lightUpSequence();
+        }
+
+        numToColor(num) {
+          switch (num) {
+            case 0:
+              return "celeste";
+            case 1:
+              return "violeta";
+            case 2:
+              return "naranja";
+            case 1:
+              return "verde";
+          }
+        }
+
+        lightUpSequence() {
+          for (let i = 0; i < this.level; i++) {
+            const color = this.numToColor(this.sequence[i]);
+            console.log(color);
+            setTimeout(() => this.lightUpColor(color), 1000 * i);
+          }
+        }
+        lightUpColor(color) {
+          this.colors[color].classList.add("light");
+          setTimeout(() => this.lightOff(color), 350);
+        }
+
+        lightOff(color) {
+          this.colors[color].classList.remove("light");
         }
       }
 
       function empezarJuego() {
-        var juego = new Juego();
+        window.juego = new Juego();
       }
     </script>
   </body>
