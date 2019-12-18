@@ -110,8 +110,9 @@
         }
 
         inicializar() {
+          this.chooseColor = this.chooseColor.bind(this);
           btnEmpezar.classList.add("hide");
-          this.level = 10;
+          this.level = 1;
           this.colors = {
             celeste,
             violeta,
@@ -125,7 +126,9 @@
             .map(n => Math.floor(Math.random() * 4));
         }
         nextLevel() {
+          this.subLevel = 0;
           this.lightUpSequence();
+          this.onClickEvent();
         }
 
         numToColor(num) {
@@ -136,8 +139,21 @@
               return "violeta";
             case 2:
               return "naranja";
-            case 1:
+            case 3:
               return "verde";
+          }
+        }
+
+        colorToNum(color) {
+          switch (color) {
+            case "celeste":
+              return 0;
+            case "violeta":
+              return 1;
+            case "naranja":
+              return 2;
+            case "verde":
+              return 3;
           }
         }
 
@@ -155,6 +171,20 @@
 
         lightOff(color) {
           this.colors[color].classList.remove("light");
+        }
+        onClickEvent() {
+          this.colors.celeste.addEventListener("click", this.chooseColor);
+          this.colors.violeta.addEventListener("click", this.chooseColor);
+          this.colors.naranja.addEventListener("click", this.chooseColor);
+          this.colors.verde.addEventListener("click", this.chooseColor);
+        }
+        chooseColor(ev) {
+          const colorName = ev.target.dataset.color;
+          const colorNum = colorToNum(colorName);
+          this.lightUpColor(colorName);
+          if (colorNum === this.sequence[this.subLevel]) {
+            this.subLevel++;
+          }
         }
       }
 
